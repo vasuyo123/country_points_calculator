@@ -1,0 +1,157 @@
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
+.dec i,
+.inc i {
+  color: white;
+}
+
+.table-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+.data-table {
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+  width: 100%;
+  background-color: #f9f9f9;
+  /* position: relative;
+    left: -110px; */
+}
+
+.data-table th,
+.data-table td {
+  border: 1px solid #363030;
+  padding: 8px;
+  text-align: center;
+}
+
+.data-table th {
+  background-color: #2085b5;
+  font-weight: bold;
+}
+
+.data-table input {
+  width: 120px;
+  padding: 4px;
+}
+
+.data-table button.remove {
+  background-color: #EF6262;
+  color: #fff;
+  margin-right: 5px;
+  border: none;
+  height: 25px;
+  font-size: 10px;
+  border-radius: 7px;
+  font-weight: bold;
+}
+
+.data-table button.add {
+  background-color: #2085b5;
+  color: #fff;
+  border: none;
+  font-size: 10px;
+  height: 25px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-weight: bold;
+ 
+
+}
+
+.add,
+.remove {
+
+  margin: 5px;
+}
+
+.data-table {
+  opacity: 0.9;
+}
+
+
+.custom-input {
+  display: flex;
+  align-items: center;
+}
+
+.custom-input button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  padding: 0 5px;
+  cursor: pointer;
+}
+
+.custom-input input {
+  border: none;
+  text-align: center;
+  width: 50px;
+  font-size: 18px;
+}
+
+.card {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  text-align: center;
+  margin-right: 20px;
+  /* position: relative;
+  left: -285px; */
+
+}
+
+.highlight {
+  background-color: #2085b5;
+  color: #fff;
+  padding: 2px 5px;
+  border-radius: 3px;
+}
+
+.inc-dec-container {
+  display: flex;
+  align-items: center;
+  width: 100px;
+  margin: 0 auto;
+}
+
+.dropdown-select {
+  height: 30px; 
+}
+
+.inc-dec-container button {
+  width: 29%;
+  padding: 0;
+  height: 30px;
+  font-size: 16px;
+  background-color: #2085b5;
+  color: rgb(17, 16, 16);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inc-dec-container input[type="number"] {
+  width: 40%;
+  height: 25px;
+  text-align: center;
+  border: 1px solid #ccc;
+}
+
+info-icon {
+  display: flex;
+}
+
+.info-icon {
+  cursor: pointer;
+  font-size: 12px;
+  margin-left: 2px;
+}
+
+.subfactor-dropdown {
+  width: 200px;
+}

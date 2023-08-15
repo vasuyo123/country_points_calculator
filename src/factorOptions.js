@@ -1,0 +1,12 @@
+export const factorOptions = [
+    { value: 'Select Factor', subOptions: ['Select Subfactor'] },
+    { value: 'Work', subOptions: ['Select Subfactor','Work opportunities', 'Career growth potential', 'Work-life balance', 'Commute to work', 'Income from work', 'Financial stability', 'Savings for retirement (PF, 401K, etc.)', 'Taxation'] },
+    { value: 'Kids and Family', subOptions: ['Select Subfactor','Kid’s education (K-12)', 'Kid’s education (Bachelors)', 'Kid’s education (Masters)', 'Availability of extracurricular activities', 'Kid’s social life', 'Family social life', 'Cultural life'] },
+    { value: 'Parental care', subOptions: ['Select Subfactor','Parental care', 'In-Laws care', 'Parental compatibility', 'In-laws’ compatibility', 'Extended family compatibility'] },
+    { value: 'Healthcare', subOptions: ['Select Subfactor','Quality health care facilities', 'Health insurance coverage', 'Health care affordability and medical expenses'] },
+    { value: 'Lifestyle', subOptions: ['Select Subfactor','Cost of living', 'Availability of food options', 'Affordability of domestic help', 'Affordability of luxury living', 'Living with pride', 'Recreation and leisure activities', 'Autonomy and personal space', 'Personal fulfillment', 'Personal preference'] },
+    { value: 'Women', subOptions: ['Select Subfactor','Gender equality', 'Women safety', 'Women healthcare', 'Maternity and parental leave policies', 'Professional growth for women'] },
+    { value: 'Retirement', subOptions: ['Select Subfactor','Government benefits', 'Health insurance coverage', 'Access to senior care services', 'Health care affordability and medical expenses', 'Cost of living for retirees', 'Recreational and leisure activities for seniors', 'Taxation for retirees', 'Proximity to family and friends'] },
+    { value: 'Governance', subOptions: ['Select Subfactor','Political stability and governance', 'Public transportation', 'Quality of infrastructure', 'Personal safety and security', 'Pollution', 'Climate and weather conditions'] },
+    { value: 'Other Income and Savings', subOptions: ['Select Subfactor','Investment opportunities', 'Other income potential', 'Property/investment management', 'Overall savings'] },
+  ];
