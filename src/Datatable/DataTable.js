@@ -65,6 +65,32 @@ const handleFactorChange = (index, value) => {
   };
 
 
+
+
+  const handleMouseEnter = (heading) => {
+    const content = infoContent[heading];
+    setTooltipContent((prevContent) => ({
+      ...prevContent,
+      [heading]: content,
+    }));
+  };
+
+  const handleMouseLeave = (heading) => {
+    setTooltipContent((prevContent) => ({
+      ...prevContent,
+      [heading]: '',
+    }));
+  };
+
+
+
+
+
+
+
+
+
+
   function toTitleCase(str) {
     return str.toLowerCase().replace(/(?:^|\s|-)\S/g, function (match) {
       return match.toUpperCase();
@@ -92,14 +118,19 @@ const handleFactorChange = (index, value) => {
               </span>
             </th>
             {headings.map((heading, index) => (
-              <th key={index}>
-
-                {toTitleCase(heading)}
-                <Tooltip content={tooltipContent[heading]} onClose={() => handleTooltipClose(heading)} />
-                <span className="info-icon" onClick={() => handleInfoClick(heading)} role="img" aria-label="Information">
-                  &#128712;
-                </span>
-              </th>
+             <th key={index}>
+             {toTitleCase(heading)}
+             <span
+               className="info-icon"
+               onMouseEnter={() => handleMouseEnter(heading)}
+               onMouseLeave={() => handleMouseLeave(heading)}
+               role="img"
+               aria-label="Information"
+             >
+               &#128712;
+             </span>
+             <Tooltip content={tooltipContent[heading]} />
+           </th>
             ))}
           </tr>
         </thead>
@@ -127,7 +158,7 @@ const handleFactorChange = (index, value) => {
                     selectedFactors[index].subOptions.map((subOption, subOptionIndex) => (
                       <option key={subOptionIndex} value={subOption}>{subOption}</option>
                     ))
-                  ) : <option key={0} value={"select Subfactor"}>{"select Subfactor"}</option>}
+                  ) : <option key={0} value={"Select Subfactor"}>{"select Subfactor"}</option>}
                 </select>
               </td>
               <td>

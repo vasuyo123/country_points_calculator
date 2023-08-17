@@ -22,7 +22,7 @@ const ShowDetailsPage = ({ handleBackToMainPage }) => {
           </div>
         </div>
         <div style={{marginTop:'80px'}}>
-          <h2>Country Point Calculator</h2>
+          <h2>Country Points Calculator</h2>
           <p>Struggling to decide whether to relocate or not? Don't worry; you're not alone. Trust the “Country Point Calculator” to help you make an informed decision that perfectly aligns with your needs and preferences. This powerful tool considers factors like safety, work opportunities, education, healthcare, and more, allowing you to customize your “Current” and “Preferred” country comparison based on your unique priorities.
 
             The process is simple and user-friendly. First, you choose the critical aspects that will shape your relocation decision from a list of key factors. Next, you assign numerical weights (0 to 100) to each factor based on its importance to you. Higher weights indicate greater significance in your decision-making process.

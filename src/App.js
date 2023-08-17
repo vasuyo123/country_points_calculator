@@ -5,6 +5,7 @@ import Logo from './Logo.png';
 import { factorOptions } from './factorOptions';
 import ShowDetailsPageContent from './showdetails/showdetails';
 import { Outlet, Link } from 'react-router-dom';
+import RemoveRowAlert from './RemoveRowAlert';
 
 
 
@@ -100,9 +101,11 @@ const App = () => {
   };
 
 
+  const [showRemoveRowAlert, setShowRemoveRowAlert] = useState(false);
+
   const handleRemoveRow = (index) => {
     if (tableData.length === 1) {
-      alert("Cannot remove the first row!");
+      setShowRemoveRowAlert(true);
       return;
     }
 
@@ -144,11 +147,11 @@ const App = () => {
           indiaPoints: 0,
         };
       } else {
-        const selectedFactor = factorOptions[0]; 
+        const selectedFactor = factorOptions[0];
         return {
           ...item,
           factor: selectedFactor.value,
-          subfactor: selectedFactor.subOptions[0], 
+          subfactor: selectedFactor.subOptions[0],
           weights: 0,
           currentcountry: 0,
           foreigncountry: 0,
@@ -159,11 +162,11 @@ const App = () => {
       }
     });
 
-    setSelectedFactors(resetData.map(() => factorOptions[0])); 
-    setSelectedSubfactors(resetData.map(() => factorOptions[0].subOptions[0])); 
+    setSelectedFactors(resetData.map(() => factorOptions[0]));
+    setSelectedSubfactors(resetData.map(() => factorOptions[0].subOptions[0]));
     setTableData(resetData);
     setShowRecommendedCountry(false);
-    setShowResetWarning(false); 
+    setShowResetWarning(false);
   };
 
 
@@ -197,17 +200,38 @@ const App = () => {
   const [showMessageModal, setShowMessageModal] = useState(false);
 
 
+  const [showAlertBox, setShowAlertBox] = useState(false);
+  const [alertContent, setAlertContent] = useState('');
+
   const handleShowRecommendedCountry = () => {
+    const hasUnselectedFactors = tableData.some(
+      item => item.factor === 'Select Factor' || item.subfactor === 'Select Subfactor'
+    );
+  
+    if (hasUnselectedFactors) {
+      setShowMessageModal(true);
+      return;
+    }
+  
     const totalCurrentCountryPoints = calculateTotalPoints('currentcountry');
     const totalForeignCountryPoints = calculateTotalPoints('foreigncountry');
-
+  
     if (totalCurrentCountryPoints === 0 && totalForeignCountryPoints === 0) {
       setShowMessageModal(true);
       return;
     }
-
+  
+    if (totalCurrentCountryPoints === totalForeignCountryPoints) {
+      const alertContent = `Both the current country points and preferred country points were the same.So unable to display the Recomended country`;
+      setShowAlertBox(true); 
+      setAlertContent(alertContent); 
+      return;
+    }
+  
     setShowRecommendedCountry(true);
   };
+  
+  
 
 
   return (
@@ -227,7 +251,7 @@ const App = () => {
               perfectly aligns with your needs and preferences. This powerful tool considers factors
               like safety, work opportunities, education, healthcare, and more, allowing you to
               customize your “Current” and “Preferred” country comparison based on your unique
-              priorities.....<Link to="/details" className="detail-link">Click for more details</Link>
+              priorities. The process is simple and user-friendly.<Link to="/details" className="detail-link">Click for more details</Link>
             </p>
 
           </div>
@@ -262,9 +286,9 @@ const App = () => {
               // 'Preferred Country',
               'Weights',
               'current country score',
-              'Foreign country score',
+              'Preferred country score',
               'Current Country Points',
-              'Foreign Country Points',
+              'Preferred Country Points',
               'Actions',
             ]}
             data={tableData}
@@ -286,18 +310,29 @@ const App = () => {
           </button>
           {showRecommendedCountry && (
             <div className="recommend-card">
-              <p>The Country Points Calculator recommends your <span className="highlight">{getRecommendedCountry()}</span> as the best living destination
-                based on your selected factors, weights, and scores. Please note that the tool provides a general comparison,
-                and individual preferences may vary. It's essential to conduct thorough research and consider personal circumstances before making any decisions.</p>
+              <p>The “Country Points Calculator”  recommends your <span className="highlight">{getRecommendedCountry()}</span> as the best living destination
+                based on your selected factors, weights, and scores. <br></br>Please note that the tool provides a general comparison,
+                and individual preferences may vary. <br></br> It's essential to conduct thorough research and consider personal circumstances before making any decisions.</p>
             </div>
           )}
+          {showAlertBox && (
+            <div className="alert-box">
+              <div className="alert-content">
+                {alertContent}<br></br><br></br>
+                <button className="close-button-alert" onClick={() => setShowAlertBox(false)}>
+                  Close
+                </button>
+              </div>
+            </div>
+          )}
+
           {showMessageModal && (
             <div className="message-modal">
               <div className="message-modal-content">
                 {/* <button className="close-icon-reccommend" onClick={() => setShowMessageModal(false)}>
                   X
                 </button> */}
-                <p>Please set values before trying to show the recommended country.</p>
+                <p>Please make selections.</p>
                 <button className='close-btn-recommend' onClick={() => setShowMessageModal(false)}>Close</button>
               </div>
             </div>
@@ -317,14 +352,19 @@ const App = () => {
                 </button>
               </div>
               <div className="card-content">
-                <p>Email: <a href="mailto:avinash.paul2031@gmail.com">avinash.paul2031@gmail.com</a></p>
-                <p>Phone: +1 (123) 456-7890</p>
+                <p>Email: <a href="mailto:pickopia.help@gmail.com">pickopia.help@gmail.com</a></p>
               </div>
             </div>
           )}
         </div>
 
       </div>
+      {showRemoveRowAlert && (
+        <RemoveRowAlert
+          message="Cannot remove the first row!"
+          onClose={() => setShowRemoveRowAlert(false)}
+        />
+      )}
     </div>
   );
 };
