@@ -282,10 +282,8 @@ const App = () => {
         <div className="table-container">
           <DataTable
             headings={[
-
-              // 'Preferred Country',
               'Weights',
-              'current country score',
+              'Current country score',
               'Preferred country score',
               'Current Country Points',
               'Preferred Country Points',

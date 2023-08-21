@@ -1,37 +1,30 @@
-.tooltip-container {
+ .tooltip {
   position: relative;
   display: inline-block;
+  border-bottom: 1px dotted black;
 }
 
-.tooltip-popup {
-  position: absolute;
-  /* top: -125px; */
-  z-index: 1000;
-  left: 50%;
-  background-color:white;
-  border: 0px solid #150404;
+.tooltiptext {
+  visibility: hidden;
+  width: 230px;
+  background-color: white;
+  border: 1px solid #150404;
   padding: 10px;
   border-radius: 5px;
-  width: 230px;
   box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
-  height: 130px; 
-  overflow-y: auto;
-}
-
-
-.close-icon-tooltip{
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  cursor: pointer;
-}
-.tooltip-content {
   white-space: pre-wrap;
-  font-size: 12px; 
-  color: #413d3d; 
+  font-size: 12px;
+  color: #413d3d;
   text-align: left;
-  margin-top: 19px;
+  position: absolute;
+  z-index: 1000;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  overflow: hidden;
+  margin-bottom: 5px;
 }
 
-
-
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './DataTable.css';
 import infoContent from '../info.json';
-import Tooltip from '../Tootip/ToolTip';
 import { factorOptions } from '../factorOptions';
 
 
@@ -16,9 +15,9 @@ const DataTable = ({ headings, data, onChange, onAddRow, onRemoveRow, setTableDa
     );
   };
 
-const [tooltipContent, setTooltipContent] = useState({});
 
-const handleInputChange = (index, field, value) => {
+
+  const handleInputChange = (index, field, value) => {
     const updatedData = [...data];
     if (field === 'weights') {
       updatedData[index][field] = parseFloat(value);
@@ -27,10 +26,10 @@ const handleInputChange = (index, field, value) => {
     }
     setTableData(updatedData);
   };
-  
-const [selectedFactors, setSelectedFactors] = useState(data.map(() => factorOptions[0]));
 
-const handleFactorChange = (index, value) => {
+  const [selectedFactors, setSelectedFactors] = useState(data.map(() => factorOptions[0]));
+
+  const handleFactorChange = (index, value) => {
     const selectedOption = factorOptions.find((option) => option.value === value);
 
     setSelectedFactors((prevSelectedFactors) => {
@@ -40,56 +39,12 @@ const handleFactorChange = (index, value) => {
     });
 
     onChange(index, 'factor', value);
-    onChange(index, 'subfactor', selectedOption.subOptions[0]); 
+    onChange(index, 'subfactor', selectedOption.subOptions[0]);
   };
 
   const handleSubfactorChange = (index, value) => {
     onChange(index, 'subfactor', value);
   };
-
-
-
-  const handleInfoClick = (heading) => {
-    const content = infoContent[heading];
-    setTooltipContent((prevContent) => ({
-      ...prevContent,
-      [heading]: content,
-    }));
-  };
-
-  const handleTooltipClose = (heading) => {
-    setTooltipContent((prevContent) => ({
-      ...prevContent,
-      [heading]: '',
-    }));
-  };
-
-
-
-
-  const handleMouseEnter = (heading) => {
-    const content = infoContent[heading];
-    setTooltipContent((prevContent) => ({
-      ...prevContent,
-      [heading]: content,
-    }));
-  };
-
-  const handleMouseLeave = (heading) => {
-    setTooltipContent((prevContent) => ({
-      ...prevContent,
-      [heading]: '',
-    }));
-  };
-
-
-
-
-
-
-
-
-
 
   function toTitleCase(str) {
     return str.toLowerCase().replace(/(?:^|\s|-)\S/g, function (match) {
@@ -103,34 +58,31 @@ const handleFactorChange = (index, value) => {
       <table className="data-table">
         <thead>
           <tr>
-            <th >
+            <th>
               Factor
-              <Tooltip content={tooltipContent['Factor']} onClose={() => handleTooltipClose('Factor')} />
-              <span className="info-icon" onClick={() => handleInfoClick('Factor')} role="img" aria-label="Information">
+              <span className="info-icon tooltip">
                 &#128712;
+                <div className="tooltiptext">{infoContent['Factor']}</div>
               </span>
             </th>
             <th>
               Subfactor
-              <Tooltip content={tooltipContent['Subfactor']} onClose={() => handleTooltipClose('Subfactor')} />
-              <span className="info-icon" onClick={() => handleInfoClick('Subfactor')} role="img" aria-label="Information">
+              <span className="info-icon tooltip">
                 &#128712;
+                <div className="tooltiptext">{infoContent['Subfactor']}</div>
               </span>
             </th>
             {headings.map((heading, index) => (
-             <th key={index}>
-             {toTitleCase(heading)}
-             <span
-               className="info-icon"
-               onMouseEnter={() => handleMouseEnter(heading)}
-               onMouseLeave={() => handleMouseLeave(heading)}
-               role="img"
-               aria-label="Information"
-             >
-               &#128712;
-             </span>
-             <Tooltip content={tooltipContent[heading]} />
-           </th>
+              <th key={index}>
+                {toTitleCase(heading)}
+                <span className="info-icon tooltip">
+                  &#128712;
+                  <div className="tooltiptext">
+                    {infoContent[heading]}
+                    console.log(tooltipContent[heading])
+                  </div>
+                </span>
+              </th>
             ))}
           </tr>
         </thead>
@@ -249,10 +201,10 @@ const handleFactorChange = (index, value) => {
             <td></td>
             <td></td>
             <td></td>
-            <td style={{textAlign:'end'}}><b>Total Points</b></td>
+            <td style={{ textAlign: 'end' }}><b>Total Points</b></td>
             <td>{calculateTotalPoints().currentCountryPoints}</td>
             <td>{calculateTotalPoints().foreignCountryPoints}</td>
-            
+
           </tr>
         </tfoot>
       </table>
