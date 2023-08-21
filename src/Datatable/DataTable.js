@@ -79,7 +79,6 @@ const DataTable = ({ headings, data, onChange, onAddRow, onRemoveRow, setTableDa
                   &#128712;
                   <div className="tooltiptext">
                     {infoContent[heading]}
-                    console.log(tooltipContent[heading])
                   </div>
                 </span>
               </th>
