@@ -109,7 +109,7 @@ const DataTable = ({ headings, data, onChange, onAddRow, onRemoveRow, setTableDa
                     selectedFactors[index].subOptions.map((subOption, subOptionIndex) => (
                       <option key={subOptionIndex} value={subOption}>{subOption}</option>
                     ))
-                  ) : <option key={0} value={"Select Subfactor"}>{"select Subfactor"}</option>}
+                  ) : <option key={0} value={"Select Subfactor"}>{"Select Subfactor"}</option>}
                 </select>
               </td>
               <td>

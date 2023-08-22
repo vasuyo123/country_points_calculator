@@ -22,8 +22,8 @@
 .recommend-card {
   border: 1px solid #0e0c0c;
   border-radius: 10px;
-  width: 80%;
-  justify-content: center;
+  width: 74%;
+  /* justify-content: center; */
   display: flex;
   background-color: #f9f9f9;
   text-align: left;

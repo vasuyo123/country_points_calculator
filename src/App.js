@@ -85,7 +85,7 @@ const App = () => {
     const foreignCountryPoints = calculateTotalPoints('foreigncountry');
 
     if (foreignCountryPoints > currentCountryPoints) {
-      return 'Foreign Country';
+      return 'Preferred Country';
     } else {
       return 'Current Country';
     }
@@ -167,23 +167,8 @@ const App = () => {
     setTableData(resetData);
     setShowRecommendedCountry(false);
     setShowResetWarning(false);
+    setShowAlertBox(false);
   };
-
-
-  // const [isAtPageEnd, setIsAtPageEnd] = useState(false);
-
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     const scrolledToBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight;
-  //     setIsAtPageEnd(scrolledToBottom);
-  //   };
-
-  //   window.addEventListener('scroll', handleScroll);
-  //   return () => {
-  //     window.removeEventListener('scroll', handleScroll);
-  //   };
-  // }, []);
-
 
   const [showDetails, setShowDetails] = useState(false);
 
@@ -207,31 +192,31 @@ const App = () => {
     const hasUnselectedFactors = tableData.some(
       item => item.factor === 'Select Factor' || item.subfactor === 'Select Subfactor'
     );
-  
+
     if (hasUnselectedFactors) {
       setShowMessageModal(true);
       return;
     }
-  
+
     const totalCurrentCountryPoints = calculateTotalPoints('currentcountry');
     const totalForeignCountryPoints = calculateTotalPoints('foreigncountry');
-  
+
     if (totalCurrentCountryPoints === 0 && totalForeignCountryPoints === 0) {
       setShowMessageModal(true);
       return;
     }
-  
+
     if (totalCurrentCountryPoints === totalForeignCountryPoints) {
       const alertContent = `Both the current country points and preferred country points were the same.So unable to display the Recomended country`;
-      setShowAlertBox(true); 
-      setAlertContent(alertContent); 
+      setShowAlertBox(true);
+      setAlertContent(alertContent);
       return;
     }
-  
+
     setShowRecommendedCountry(true);
   };
-  
-  
+
+
 
 
   return (
@@ -306,9 +291,9 @@ const App = () => {
           >
             Show Recommended Country
           </button>
-          {showRecommendedCountry && (
+          {showRecommendedCountry && !showAlertBox && (
             <div className="recommend-card">
-              <p>The “Country Points Calculator”  recommends your <span className="highlight">{getRecommendedCountry()}</span> as the best living destination
+              <p>The “Country Points Calculator” recommends your <span className="highlight">{getRecommendedCountry()}</span> as the best living destination
                 based on your selected factors, weights, and scores. <br></br>Please note that the tool provides a general comparison,
                 and individual preferences may vary. <br></br> It's essential to conduct thorough research and consider personal circumstances before making any decisions.</p>
             </div>
@@ -323,19 +308,19 @@ const App = () => {
               </div>
             </div>
           )}
-
           {showMessageModal && (
             <div className="message-modal">
               <div className="message-modal-content">
                 {/* <button className="close-icon-reccommend" onClick={() => setShowMessageModal(false)}>
-                  X
-                </button> */}
+          X
+        </button> */}
                 <p>Please make selections.</p>
                 <button className='close-btn-recommend' onClick={() => setShowMessageModal(false)}>Close</button>
               </div>
             </div>
           )}
         </div>
+
 
         <div className={`footer`}>
           <button className="contact-button" onClick={handleContactButtonClick}>
