@@ -77,8 +77,8 @@
 
   .contact-card {
     position: fixed;
-    top: -90%;
-    left: 50%;
+    top: -105%;
+    left: 90.5%;
     transform: translate(-50%, -50%);
     background-color: #2085b5; 
     border: 2px solid #2085b5; 
