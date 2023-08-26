@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import './App.css';
 import DataTable from './Datatable/DataTable';
 import Logo from './Logo.png';
@@ -9,12 +9,9 @@ import RemoveRowAlert from './RemoveRowAlert';
 
 
 
-
-
 const App = () => {
   const initialRow = {
     factor: '',
-    // preferedCountry: '',
     weights: 0,
     usPoints: 0,
     indiaPoints: 0,
@@ -23,12 +20,28 @@ const App = () => {
     canAddNew: false,
   };
 
+ 
+  const [tableData, setTableData] = useState(() => {
+    const storedData = localStorage.getItem('tableData');
+    return storedData ? JSON.parse(storedData) : [
+      { ...initialRow },
+      { ...initialRow, factor: '', canAddNew: true },
+      { ...initialRow, factor: '', canAddNew: true },
+    ];
+  });
+  const handleSaveDataToStorage = () => {
+    localStorage.setItem('tableData', JSON.stringify(tableData));
+  };
 
-  const [tableData, setTableData] = useState([
-    { ...initialRow },
-    { ...initialRow, factor: '', canAddNew: true },
-    { ...initialRow, factor: '', canAddNew: true },
-  ]);
+  useEffect(() => {
+    handleSaveDataToStorage();
+  }, [tableData]);
+
+  useEffect(() => {
+    setSelectedSubfactors(tableData.map(() => factorOptions[0].subOptions[0]));
+  }, [tableData]);
+  
+  
 
   const [selectedFactors, setSelectedFactors] = useState(
     tableData.map(() => factorOptions[0])
@@ -192,31 +205,35 @@ const App = () => {
     const hasUnselectedFactors = tableData.some(
       item => item.factor === 'Select Factor' || item.subfactor === 'Select Subfactor'
     );
-
+  
     if (hasUnselectedFactors) {
       setShowMessageModal(true);
       return;
     }
-
+  
     const totalCurrentCountryPoints = calculateTotalPoints('currentcountry');
     const totalForeignCountryPoints = calculateTotalPoints('foreigncountry');
-
+  
     if (totalCurrentCountryPoints === 0 && totalForeignCountryPoints === 0) {
       setShowMessageModal(true);
       return;
     }
-
+  
     if (totalCurrentCountryPoints === totalForeignCountryPoints) {
-      const alertContent = `Both the current country points and preferred country points were the same.So unable to display the Recomended country`;
+      const alertContent = `The “Country Points Calculator” recommends either country (Current/Preferred) as the best living destination based on your selected factors, weights, and scores.
+      Please note that the tool provides a general comparison, and individual preferences may vary.
+      It's essential to conduct thorough research and consider personal circumstances before making any decisions.`;
       setShowAlertBox(true);
       setAlertContent(alertContent);
+      setShowRecommendedCountry(false); 
       return;
     }
-
+  
     setShowRecommendedCountry(true);
   };
-
-
+  
+  
+  
 
 
   return (
@@ -236,7 +253,7 @@ const App = () => {
               perfectly aligns with your needs and preferences. This powerful tool considers factors
               like safety, work opportunities, education, healthcare, and more, allowing you to
               customize your “Current” and “Preferred” country comparison based on your unique
-              priorities. The process is simple and user-friendly.<Link to="/details" className="detail-link">Click for more details</Link>
+              priorities. The process is simple and user-friendly.&nbsp;&nbsp;&nbsp;<Link to="/details" className="detail-link">Click for more details</Link>
             </p>
 
           </div>

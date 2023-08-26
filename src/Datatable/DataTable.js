@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import './DataTable.css';
 import infoContent from '../info.json';
 import { factorOptions } from '../factorOptions';
@@ -15,7 +15,7 @@ const DataTable = ({ headings, data, onChange, onAddRow, onRemoveRow, setTableDa
     );
   };
 
-
+ 
 
   const handleInputChange = (index, field, value) => {
     const updatedData = [...data];
@@ -61,14 +61,24 @@ const DataTable = ({ headings, data, onChange, onAddRow, onRemoveRow, setTableDa
             <th>
               Factor
               <span className="info-icon tooltip">
-                &#128712;
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10" stroke="White" strokeWidth="2" fill="none" />
+                  <text x="50%" y="75%" textAnchor="middle" fontSize="16" fill="White">
+                    i
+                  </text>
+                </svg>
                 <div className="tooltiptext">{infoContent['Factor']}</div>
               </span>
             </th>
             <th>
               Subfactor
               <span className="info-icon tooltip">
-                &#128712;
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10" stroke="White" strokeWidth="2" fill="none" />
+                  <text x="50%" y="75%" textAnchor="middle" fontSize="16" fill="White">
+                    i
+                  </text>
+                </svg>
                 <div className="tooltiptext">{infoContent['Subfactor']}</div>
               </span>
             </th>
@@ -76,7 +86,12 @@ const DataTable = ({ headings, data, onChange, onAddRow, onRemoveRow, setTableDa
               <th key={index}>
                 {toTitleCase(heading)}
                 <span className="info-icon tooltip">
-                  &#128712;
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10" stroke="White" strokeWidth="2" fill="none" />
+                  <text x="50%" y="75%" textAnchor="middle" fontSize="16" fill="White">
+                    i
+                  </text>
+                </svg>
                   <div className="tooltiptext">
                     {infoContent[heading]}
                   </div>
