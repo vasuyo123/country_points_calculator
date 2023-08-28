@@ -12,6 +12,7 @@ import RemoveRowAlert from './RemoveRowAlert';
 const App = () => {
   const initialRow = {
     factor: '',
+    subfactor:'',
     weights: 0,
     usPoints: 0,
     indiaPoints: 0,
@@ -25,8 +26,8 @@ const App = () => {
     const storedData = localStorage.getItem('tableData');
     return storedData ? JSON.parse(storedData) : [
       { ...initialRow },
-      { ...initialRow, factor: '', canAddNew: true },
-      { ...initialRow, factor: '', canAddNew: true },
+      { ...initialRow, factor: '',subfactor:'', canAddNew: true },
+      { ...initialRow, factor: '',subfactor:'', canAddNew: true },
     ];
   });
   const handleSaveDataToStorage = () => {
@@ -211,8 +212,8 @@ const App = () => {
       return;
     }
   
-    const totalCurrentCountryPoints = calculateTotalPoints('currentcountry');
-    const totalForeignCountryPoints = calculateTotalPoints('foreigncountry');
+    const totalCurrentCountryPoints = calculateTotalPoints('indiaPoints');
+    const totalForeignCountryPoints = calculateTotalPoints('usPoints');
   
     if (totalCurrentCountryPoints === 0 && totalForeignCountryPoints === 0) {
       setShowMessageModal(true);
@@ -253,7 +254,7 @@ const App = () => {
               perfectly aligns with your needs and preferences. This powerful tool considers factors
               like safety, work opportunities, education, healthcare, and more, allowing you to
               customize your “Current” and “Preferred” country comparison based on your unique
-              priorities. The process is simple and user-friendly.&nbsp;&nbsp;&nbsp;<Link to="/details" className="detail-link">Click for more details</Link>
+              priorities. The process is simple and user-friendly.&nbsp;<Link to="/details" className="detail-link">Click for more details</Link>
             </p>
 
           </div>
@@ -341,7 +342,7 @@ const App = () => {
 
         <div className={`footer`}>
           <button className="contact-button" onClick={handleContactButtonClick}>
-            <i className="fa-regular fa-address-book" style={{ marginRight: '8px' }}></i>Contact Us
+            <i className="fa-regular fa-address-book"></i>Contact Us
           </button>
           {showContactCard && (
             <div className="contact-card">

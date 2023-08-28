@@ -348,14 +348,13 @@ const ShowDetailsPage = ({ handleBackToMainPage }) => {
           {showContactCard && (
             <div className="contact-card">
               <div className="card-header">
-                <h3>Contact Us</h3>
+                <h3 style={{color:'black'}}>Contact Us</h3>
                 <button className="close-icon" onClick={handleContactButtonClick}>
                   <i className="fas fa-times"></i>
                 </button>
               </div>
               <div className="card-content">
-                <p>Email: <a href="mailto:avinash.paul2031@gmail.com">avinash.paul2031@gmail.com</a></p>
-                <p>Phone: +1 (123) 456-7890</p>
+                <p style={{color:'black'}}>Email: <a href="mailto:pickopia.help@gmail.com">pickopia.help@gmail.com</a></p>
               </div>
             </div>
           )}

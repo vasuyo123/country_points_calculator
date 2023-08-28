@@ -6,7 +6,7 @@
 .tooltiptext {
   visibility: hidden;
   width: 230px;
-  background-color: white;
+  background-color:#ffffff;
   border: 1px solid #150404;
   padding: 10px;
   border-radius: 5px;
@@ -14,7 +14,7 @@
   white-space: pre-wrap;
   font-size: 12px;
   font-weight: 400;
-  color: #413d3d;
+  color: #070707;
   text-align: left;
   position: absolute;
   z-index: 1000;
