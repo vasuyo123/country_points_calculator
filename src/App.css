@@ -152,7 +152,8 @@ body {
   transition: background-color 0.3s;
   background-color:#EF6262; 
   color: #fff;
-  margin-left: 94.7%;
+  float: right;
+  text-align: end;
   margin-bottom: 10px;
 
 }

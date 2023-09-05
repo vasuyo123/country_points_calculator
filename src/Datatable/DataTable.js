@@ -1,21 +1,28 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import './DataTable.css';
 import infoContent from '../info.json';
 import { factorOptions } from '../factorOptions';
 
 
-const DataTable = ({ headings, data, onChange, onAddRow, onRemoveRow, setTableData }) => {
+const DataTable = ({ headings, data, onChange, onAddRow, onRemoveRow, setTableData ,setShowRecommendedCountry}) => {
   const calculateTotalPoints = () => {
-    return data.reduce(
-      (acc, item) => ({
-        currentCountryPoints: acc.currentCountryPoints + item.weights * item.currentcountry,
-        foreignCountryPoints: acc.foreignCountryPoints + item.weights * item.foreigncountry,
-      }),
-      { currentCountryPoints: 0, foreignCountryPoints: 0 }
-    );
+    let indiaPoints = 0;
+    let usPoints = 0;
+    data.forEach((item) => {
+      const weights = parseFloat(item.weights) || 0;
+      const currentCountryScore = parseInt(item.currentcountry) || 0;
+      const preferredCountryScore = parseInt(item.foreigncountry) || 0;
+  
+      indiaPoints += weights * currentCountryScore;
+      usPoints += weights * preferredCountryScore;
+    });
+  
+    return { indiaPoints, usPoints };
   };
+  
+  
 
- 
+
 
   const handleInputChange = (index, field, value) => {
     const updatedData = [...data];
@@ -25,7 +32,12 @@ const DataTable = ({ headings, data, onChange, onAddRow, onRemoveRow, setTableDa
       updatedData[index][field] = parseInt(value);
     }
     setTableData(updatedData);
+  
+    console.log('Updated Data:', updatedData);
+    console.log('Field:', field);
+    console.log('Value:', value);
   };
+  
 
   const [selectedFactors, setSelectedFactors] = useState(data.map(() => factorOptions[0]));
 
@@ -40,6 +52,7 @@ const DataTable = ({ headings, data, onChange, onAddRow, onRemoveRow, setTableDa
 
     onChange(index, 'factor', value);
     onChange(index, 'subfactor', selectedOption.subOptions[0]);
+    setShowRecommendedCountry(false)
   };
 
   const handleSubfactorChange = (index, value) => {
@@ -61,7 +74,7 @@ const DataTable = ({ headings, data, onChange, onAddRow, onRemoveRow, setTableDa
             <th>
               Factor
               <span className="info-icon tooltip">
-              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24">
                   <circle cx="12" cy="12" r="10" stroke="White" strokeWidth="2" fill="none" />
                   <text x="50%" y="75%" textAnchor="middle" fontSize="16" fill="White">
                     i
@@ -86,12 +99,12 @@ const DataTable = ({ headings, data, onChange, onAddRow, onRemoveRow, setTableDa
               <th key={index}>
                 {toTitleCase(heading)}
                 <span className="info-icon tooltip">
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="10" stroke="White" strokeWidth="2" fill="none" />
-                  <text x="50%" y="75%" textAnchor="middle" fontSize="16" fill="White">
-                    i
-                  </text>
-                </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" stroke="White" strokeWidth="2" fill="none" />
+                    <text x="50%" y="75%" textAnchor="middle" fontSize="16" fill="White">
+                      i
+                    </text>
+                  </svg>
                   <div className="tooltiptext">
                     {infoContent[heading]}
                   </div>
@@ -187,8 +200,9 @@ const DataTable = ({ headings, data, onChange, onAddRow, onRemoveRow, setTableDa
                 </div>
               </td>
 
-              <td>{item.weights * item.currentcountry}</td>
-              <td>{item.weights * item.foreigncountry}</td>
+              <td>{(parseInt(item.weights) || 0) * (parseInt(item.currentcountry) || 0)}</td>
+              <td>{(parseInt(item.weights) || 0) * (parseInt(item.foreigncountry) || 0)}</td>
+
 
               <td>
                 {index === data.length - 1 ? (
@@ -216,8 +230,8 @@ const DataTable = ({ headings, data, onChange, onAddRow, onRemoveRow, setTableDa
             <td></td>
             <td></td>
             <td style={{ textAlign: 'end' }}><b>Total Points</b></td>
-            <td>{calculateTotalPoints().currentCountryPoints}</td>
-            <td>{calculateTotalPoints().foreignCountryPoints}</td>
+            <td>{calculateTotalPoints().indiaPoints}</td>
+            <td>{calculateTotalPoints().usPoints}</td>
 
           </tr>
         </tfoot>

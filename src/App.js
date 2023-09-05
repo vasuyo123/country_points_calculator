@@ -8,28 +8,32 @@ import { Outlet, Link } from 'react-router-dom';
 import RemoveRowAlert from './RemoveRowAlert';
 
 
-
 const App = () => {
   const initialRow = {
     factor: '',
     subfactor:'',
     weights: 0,
-    usPoints: 0,
-    indiaPoints: 0,
     currentcountry: 0,
     foreigncountry: 0,
+    usPoints: 0,
+    indiaPoints: 0,
     canAddNew: false,
   };
 
+  const [tableData, setTableData] = useState([
+        { ...initialRow },
+         { ...initialRow, factor: '',subfactor:'', canAddNew: true },
+       ]);
  
-  const [tableData, setTableData] = useState(() => {
-    const storedData = localStorage.getItem('tableData');
-    return storedData ? JSON.parse(storedData) : [
-      { ...initialRow },
-      { ...initialRow, factor: '',subfactor:'', canAddNew: true },
-      { ...initialRow, factor: '',subfactor:'', canAddNew: true },
-    ];
-  });
+  // const [tableData, setTableData] = useState(() => {
+  //   const storedData = localStorage.getItem('tableData');
+  //   return storedData ? JSON.parse(storedData) : [
+  //     { ...initialRow },
+  //     { ...initialRow, factor: '',subfactor:'', canAddNew: true },
+  //     { ...initialRow, factor: '',subfactor:'', canAddNew: true },
+  //   ];
+  // }
+  // );
   const handleSaveDataToStorage = () => {
     localStorage.setItem('tableData', JSON.stringify(tableData));
   };
@@ -57,12 +61,14 @@ const App = () => {
     const updatedData = [...tableData];
     updatedData[index][field] = value;
     setTableData(updatedData);
+    setShowRecommendedCountry(false)
   };
 
   const handleAddRow = (index) => {
+    setShowRecommendedCountry(false)
     const newRow = {
       factor: '',
-      Subfactor: '',
+      subfactor: '',
       weights: 0,
       currentcountry: 0,
       foreigncountry: 0,
@@ -94,26 +100,44 @@ const App = () => {
 
     setTableData(updatedData);
   };
+  
   const getRecommendedCountry = () => {
-    const currentCountryPoints = calculateTotalPoints('currentcountry');
-    const foreignCountryPoints = calculateTotalPoints('foreigncountry');
+  const totalPoints = calculateTotalPoints();
+  const totalindiaPoints = calculateTotalPoints('currentcountry');
+  const totalusPoints = calculateTotalPoints('foreigncountry');
+  if (totalPoints.indiaPoints < totalPoints.usPoints) {
+    
+    return 'Preferred Country';
+  } else {
+    return 'Current Country';
+  }
+};
 
-    if (foreignCountryPoints > currentCountryPoints) {
-      return 'Preferred Country';
-    } else {
-      return 'Current Country';
-    }
-  };
+  
 
   const [showRecommendedCountry, setShowRecommendedCountry] = useState(false);
 
-
-
-
-  const calculateTotalPoints = (field) => {
-    return tableData.reduce((acc, item) => acc + parseInt(item[field]), 0);
+  // const calculateTotalPoints = () => {
+  //   const indiaPoints = tableData.reduce((acc, item) => acc + parseInt(item.indiaPoints), 0);
+  //   const usPoints = tableData.reduce((acc, item) => acc + parseInt(item.usPoints), 0);
+  //   return { indiaPoints,usPoints };
+  // };
+  
+  const calculateTotalPoints = () => {
+    let indiaPoints = 0;
+    let usPoints = 0;
+    tableData.forEach((item) => {
+      const weights = parseFloat(item.weights) || 0;
+      const currentCountryScore = parseInt(item.currentcountry) || 0;
+      const preferredCountryScore = parseInt(item.foreigncountry) || 0;
+  
+      indiaPoints += weights * currentCountryScore;
+      usPoints += weights * preferredCountryScore;
+    });
+  
+    return { indiaPoints, usPoints };
   };
-
+  
 
   const [showRemoveRowAlert, setShowRemoveRowAlert] = useState(false);
 
@@ -204,23 +228,26 @@ const App = () => {
 
   const handleShowRecommendedCountry = () => {
     const hasUnselectedFactors = tableData.some(
-      item => item.factor === 'Select Factor' || item.subfactor === 'Select Subfactor'
-    );
-  
+      item => item.factor === 'Select Factor' || item.subfactor === 'Select Subfactor' || item.factor === '' || item.subfactor === ''
+    );  
+    console.log(tableData);
     if (hasUnselectedFactors) {
       setShowMessageModal(true);
       return;
     }
   
-    const totalCurrentCountryPoints = calculateTotalPoints('indiaPoints');
-    const totalForeignCountryPoints = calculateTotalPoints('usPoints');
   
-    if (totalCurrentCountryPoints === 0 && totalForeignCountryPoints === 0) {
+    const total = calculateTotalPoints();
+    // const totalusPoints = calculateTotalPoints('foreigncountry');
+    console.log(total);
+  
+    if (total.indiaPoints === 0 && total.usPoints === 0) {
       setShowMessageModal(true);
       return;
     }
+    
   
-    if (totalCurrentCountryPoints === totalForeignCountryPoints) {
+    if (total.indiaPoints === total.usPoints) {
       const alertContent = `The “Country Points Calculator” recommends either country (Current/Preferred) as the best living destination based on your selected factors, weights, and scores.
       Please note that the tool provides a general comparison, and individual preferences may vary.
       It's essential to conduct thorough research and consider personal circumstances before making any decisions.`;
@@ -232,8 +259,19 @@ const App = () => {
   
     setShowRecommendedCountry(true);
   };
+
   
   
+  
+  
+  // const hasInvalidSelections = tableData.some(
+  //   item => item.factor === 'Select Factor' || item.subfactor === 'Select Subfactor'
+  // );
+  
+  // if (hasInvalidSelections) {
+  //   setShowMessageModal(true);
+  //   return;
+  // }
   
 
 
@@ -254,7 +292,7 @@ const App = () => {
               perfectly aligns with your needs and preferences. This powerful tool considers factors
               like safety, work opportunities, education, healthcare, and more, allowing you to
               customize your “Current” and “Preferred” country comparison based on your unique
-              priorities. The process is simple and user-friendly.&nbsp;<Link to="/details" className="detail-link">Click for more details</Link>
+              priorities. The process is simple and user-friendly.&nbsp;<Link target="_blank" to="/details" className="detail-link">Click for more details</Link>
             </p>
 
           </div>
@@ -299,6 +337,7 @@ const App = () => {
             onAddRow={handleAddRow}
             onRemoveRow={handleRemoveRow}
             setTableData={setTableData}
+            setShowRecommendedCountry={setShowRecommendedCountry}
           />
 
         </div>
@@ -309,7 +348,7 @@ const App = () => {
           >
             Show Recommended Country
           </button>
-          {showRecommendedCountry && !showAlertBox && (
+          { showRecommendedCountry && !showAlertBox && (
             <div className="recommend-card">
               <p>The “Country Points Calculator” recommends your <span className="highlight">{getRecommendedCountry()}</span> as the best living destination
                 based on your selected factors, weights, and scores. <br></br>Please note that the tool provides a general comparison,
@@ -329,9 +368,6 @@ const App = () => {
           {showMessageModal && (
             <div className="message-modal">
               <div className="message-modal-content">
-                {/* <button className="close-icon-reccommend" onClick={() => setShowMessageModal(false)}>
-          X
-        </button> */}
                 <p>Please make selections.</p>
                 <button className='close-btn-recommend' onClick={() => setShowMessageModal(false)}>Close</button>
               </div>
