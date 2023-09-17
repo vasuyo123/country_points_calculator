@@ -18,7 +18,7 @@ const ShowDetailsPage = ({ handleBackToMainPage , onClose }) => {
       <div className="paragraph-container">
         <div className='header'>
           <div className="back-button">
-            <Link to="/" className="back-link">Go Back</Link>
+            <Link onClick={onClose} className="back-link">Go Back</Link>
           </div>
           {/* <div className="logo-container" >
             <img className="logo-image" src={Logo} alt="Logo" />
