@@ -6,6 +6,7 @@ import { factorOptions } from './factorOptions';
 import ShowDetailsPageContent from './showdetails/showdetails';
 import { Outlet, Link } from 'react-router-dom';
 import RemoveRowAlert from './RemoveRowAlert';
+import ModalWrapper from './ModalWrapper';
 
 
 const App = () => {
@@ -19,6 +20,17 @@ const App = () => {
     indiaPoints: 0,
     canAddNew: false,
   };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
 
   const [tableData, setTableData] = useState([
         { ...initialRow },
@@ -62,6 +74,8 @@ const App = () => {
     updatedData[index][field] = value;
     setTableData(updatedData);
     setShowRecommendedCountry(false)
+    setAlertContent(false)
+    setShowAlertBox(false)
   };
 
   const handleAddRow = (index) => {
@@ -292,8 +306,14 @@ const App = () => {
               perfectly aligns with your needs and preferences. This powerful tool considers factors
               like safety, work opportunities, education, healthcare, and more, allowing you to
               customize your “Current” and “Preferred” country comparison based on your unique
-              priorities. The process is simple and user-friendly.&nbsp;<Link target="_blank" to="/details" className="detail-link">Click for more details</Link>
+              priorities.The process is simple and user-friendly.&nbsp;<Link  onClick={openModal} className="detail-link">Click for more details</Link>
             </p>
+
+            {isModalOpen && (
+        <ModalWrapper>
+          <ShowDetailsPageContent onClose={closeModal} />
+        </ModalWrapper>
+      )}
 
           </div>
         )}
@@ -359,9 +379,9 @@ const App = () => {
             <div className="alert-box">
               <div className="alert-content">
                 {alertContent}<br></br><br></br>
-                <button className="close-button-alert" onClick={() => setShowAlertBox(false)}>
+                {/* <button className="close-button-alert" onClick={() => setShowAlertBox(false)}>
                   Close
-                </button>
+                </button> */}
               </div>
             </div>
           )}

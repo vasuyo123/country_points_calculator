@@ -11,12 +11,12 @@
     z-index: 1000;
   }
   
-  .alert-content {
+  .alert-contentt {
     background-color: white;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    text-align: justify;
   }
 .removealertclose{
   padding: 10px 20px;
