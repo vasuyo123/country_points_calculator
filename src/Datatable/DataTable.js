@@ -130,12 +130,12 @@ const DataTable = ({ headings, data, onChange, onAddRow, onRemoveRow, setTableDa
               <td>
                 <select
                   className='subfactor-dropdown dropdown-select'
-                  value={item.subfactor}
+                  defaultValue={item.subfactor}
                   onChange={(e) => handleSubfactorChange(index, e.target.value)}
                 >
-                  {(item.factor !== 'Select Factor' && selectedFactors[index]) ? (
-                    selectedFactors[index].subOptions.map((subOption, subOptionIndex) => (
-                      <option key={subOptionIndex} value={subOption}>{subOption}</option>
+                  {(item.factor !== 'Select Factor' && selectedFactors[selectedFactors.findIndex(x => x.value ===item.factor)]) ? (
+                    selectedFactors[selectedFactors.findIndex(x => x.value ===item.factor)].subOptions.map((subOption, subOptionIndex) => (
+                      <option  selected={subOption == item.subfactor} key={subOptionIndex} value={subOption}>{subOption}</option>
                     ))
                   ) : <option key={0} value={"Select Subfactor"}>{"Select Subfactor"}</option>}
                 </select>
@@ -174,7 +174,7 @@ const DataTable = ({ headings, data, onChange, onAddRow, onRemoveRow, setTableDa
                     min={1}
                     max={10}
                     step={1}
-                    onChange={(e) => handleInputChange(index, 'currentcountry', e.target.value)}
+                    onChange={(e) => onChange(index, 'currentcountry', e.target.value)}
                   />
                   <button className="inc" onClick={() => onChange(index, 'currentcountry', Math.min(10, parseInt(item.currentcountry) + 1))}>
                     <i className="fas fa-plus"></i>
@@ -192,7 +192,7 @@ const DataTable = ({ headings, data, onChange, onAddRow, onRemoveRow, setTableDa
                     min={1}
                     max={10}
                     step={1}
-                    onChange={(e) => handleInputChange(index, 'foreigncountry', e.target.value)}
+                    onChange={(e) => onChange(index, 'foreigncountry', e.target.value)}
                   />
                   <button className="inc" onClick={() => onChange(index, 'foreigncountry', Math.min(10, parseInt(item.foreigncountry) + 1))}>
                     <i className="fas fa-plus"></i>

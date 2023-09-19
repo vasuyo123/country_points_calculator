@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from 'react';
+import React, { useState , useEffect , useCallback} from 'react';
 import './App.css';
 import DataTable from './Datatable/DataTable';
 import Logo from './Logo.png';
@@ -30,7 +30,7 @@ const App = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
+  
 
   const [tableData, setTableData] = useState([
         { ...initialRow },
@@ -72,12 +72,12 @@ const App = () => {
   const handleInputChange = (index, field, value) => {
     const updatedData = [...tableData];
     updatedData[index][field] = value;
-    setTableData(updatedData);
+      setTableData(updatedData);
     setShowRecommendedCountry(false)
     setAlertContent(false)
     setShowAlertBox(false)
   };
-
+  
   const handleAddRow = (index) => {
     setShowRecommendedCountry(false)
     const newRow = {
@@ -107,6 +107,11 @@ const App = () => {
     setSelectedSubfactors(newSelectedSubfactors);
     const updatedData = [...tableData];
     updatedData.push(newRow);
+    setSelectedSubfactors((prevSubfactors) => {
+      const newSubfactors = [...prevSubfactors];
+      newSubfactors.splice(index + 1, 0, 0); 
+      return newSubfactors;
+    });
 
     if (index >= 0 && index < updatedData.length - 1) {
       updatedData[index].canAddNew = false;
@@ -160,17 +165,18 @@ const App = () => {
       setShowRemoveRowAlert(true);
       return;
     }
-
-    const updatedData = [...tableData];
+  
+       const updatedData = [...tableData];
     updatedData.splice(index, 1);
-
-
-    if (index - 1 >= 0) {
+    console.log(tableData,'tableData')
+   
+      if (index - 1 >= 0) {
       updatedData[index - 1].canAddNew = true;
     }
-
+  
     setTableData(updatedData);
   };
+ 
 
 
 
@@ -358,7 +364,7 @@ const App = () => {
             onRemoveRow={handleRemoveRow}
             setTableData={setTableData}
             setShowRecommendedCountry={setShowRecommendedCountry}
-          />
+                      />
 
         </div>
         <div className="recommend">

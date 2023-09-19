@@ -6,15 +6,16 @@
 
 .paragraph-container p {
     margin: 0;
+    text-align: justify;
 }
 
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px; 
+    /* padding: 10px 20px; */
     color: white; 
-    margin-top: -48px   ;
+    margin-top: -130px   ;
   }
   
   
@@ -95,9 +96,8 @@
     margin-bottom: -18px;
   }
   .close-button{
-    float: right;
-    margin-right: 35px;
-    margin-top: 10px;
+    position: fixed;
+    margin-left: 78rem;
   }
   
   
