@@ -37,15 +37,6 @@ const App = () => {
          { ...initialRow, factor: '',subfactor:'', canAddNew: true },
        ]);
  
-  // const [tableData, setTableData] = useState(() => {
-  //   const storedData = localStorage.getItem('tableData');
-  //   return storedData ? JSON.parse(storedData) : [
-  //     { ...initialRow },
-  //     { ...initialRow, factor: '',subfactor:'', canAddNew: true },
-  //     { ...initialRow, factor: '',subfactor:'', canAddNew: true },
-  //   ];
-  // }
-  // );
   const handleSaveDataToStorage = () => {
     localStorage.setItem('tableData', JSON.stringify(tableData));
   };
@@ -136,11 +127,6 @@ const App = () => {
 
   const [showRecommendedCountry, setShowRecommendedCountry] = useState(false);
 
-  // const calculateTotalPoints = () => {
-  //   const indiaPoints = tableData.reduce((acc, item) => acc + parseInt(item.indiaPoints), 0);
-  //   const usPoints = tableData.reduce((acc, item) => acc + parseInt(item.usPoints), 0);
-  //   return { indiaPoints,usPoints };
-  // };
   
   const calculateTotalPoints = () => {
     let indiaPoints = 0;
@@ -258,7 +244,6 @@ const App = () => {
   
   
     const total = calculateTotalPoints();
-    // const totalusPoints = calculateTotalPoints('foreigncountry');
     console.log(total);
   
     if (total.indiaPoints === 0 && total.usPoints === 0) {
@@ -279,21 +264,6 @@ const App = () => {
   
     setShowRecommendedCountry(true);
   };
-
-  
-  
-  
-  
-  // const hasInvalidSelections = tableData.some(
-  //   item => item.factor === 'Select Factor' || item.subfactor === 'Select Subfactor'
-  // );
-  
-  // if (hasInvalidSelections) {
-  //   setShowMessageModal(true);
-  //   return;
-  // }
-  
-
 
   return (
     <div className="app" >
@@ -385,9 +355,6 @@ const App = () => {
             <div className="alert-box">
               <div className="alert-content">
                 {alertContent}<br></br><br></br>
-                {/* <button className="close-button-alert" onClick={() => setShowAlertBox(false)}>
-                  Close
-                </button> */}
               </div>
             </div>
           )}

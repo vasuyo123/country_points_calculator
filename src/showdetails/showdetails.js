@@ -1,7 +1,6 @@
 import React ,{ useState}  from 'react';
 import { Link } from 'react-router-dom';
 import './showdetails.css';
-import Logo from '../Logo.png';
 
 const ShowDetailsPage = ({ handleBackToMainPage , onClose }) => {
 
@@ -20,9 +19,6 @@ const ShowDetailsPage = ({ handleBackToMainPage , onClose }) => {
           <div className="back-button">
             <Link onClick={onClose} className="back-link">Go Back</Link>
           </div>
-          {/* <div className="logo-container" >
-            <img className="logo-image" src={Logo} alt="Logo" />
-          </div> */}
         </div>
         <div style={{marginTop:'80px'}}>
           <h2>Country Points Calculator</h2>

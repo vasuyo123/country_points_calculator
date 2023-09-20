@@ -20,10 +20,6 @@ const DataTable = ({ headings, data, onChange, onAddRow, onRemoveRow, setTableDa
     return { indiaPoints, usPoints };
   };
   
-  
-
-
-
   const handleInputChange = (index, field, value) => {
     const updatedData = [...data];
     if (field === 'weights') {
@@ -32,13 +28,8 @@ const DataTable = ({ headings, data, onChange, onAddRow, onRemoveRow, setTableDa
       updatedData[index][field] = parseInt(value);
     }
     setTableData(updatedData);
-  
-    console.log('Updated Data:', updatedData);
-    console.log('Field:', field);
-    console.log('Value:', value);
   };
   
-
   const [selectedFactors, setSelectedFactors] = useState(data.map(() => factorOptions[0]));
 
   const handleFactorChange = (index, value) => {

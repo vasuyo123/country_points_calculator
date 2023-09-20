@@ -23,7 +23,6 @@
   border: 1px solid #0e0c0c;
   border-radius: 10px;
   width:75%;
-  /* justify-content: center; */
   display: flex;
   background-color: #f9f9f9;
   text-align: left;
@@ -286,16 +285,7 @@ body {
 .message-modal button {
   margin-top: 10px;
 }
-/* .close-icon-reccommend {
-  position: relative;
-  top: 14px;
-  right: 14px;
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  color: #0f0f0f;
-} */
+
 .close-btn-recommend{
   padding: 10px 20px;
   border: none;
