@@ -5,7 +5,7 @@ import App from './App';
 import ShowDetailsPage from './showdetails/showdetails'; 
 import './index.css';
 import Tooltip from './Tootip/ToolTip';
-import { DataProvider } from './DataContext';
+import { DataProvider } from './Datacontext'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 

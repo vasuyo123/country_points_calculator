@@ -1,5 +1,6 @@
 {
   "name": "points-calculator",
+  "homepage":"https://pickopia.com/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
